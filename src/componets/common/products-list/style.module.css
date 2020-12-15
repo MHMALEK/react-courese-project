@@ -1,0 +1,31 @@
+.listWrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.productItem {
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 1px 1px 6px gainsboro;
+  margin: 8px;
+  max-width: 300px;
+  min-width: 400px;
+}
+
+.loadingWrapper {
+  text-align: center;
+  margin: 100px;
+}
+
+.productName {
+  font-weight: bold;
+  margin: 8px;
+}
+
+.productPrice {
+  margin: 8px;
+  color: #4CAF50;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
