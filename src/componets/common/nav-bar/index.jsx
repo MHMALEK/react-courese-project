@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import NavBarItem from "../nav-bar-item";
 
 import "./style.css";
@@ -40,21 +41,25 @@ class NavBar extends React.Component {
     const { cartItemsNumber } = this.props;
     return (
       <div className="nav-bar">
-        <NavBarItem
-          onClick={() => this.handleOnNavBarItemClick(navBarItem.HOME)}
-        >
-          Home
-        </NavBarItem>
+        <Link to="/">
+          <NavBarItem
+            onClick={() => this.handleOnNavBarItemClick(navBarItem.HOME)}
+          >
+            Home
+          </NavBarItem>
+        </Link>
         <NavBarItem
           onClick={() => this.handleOnNavBarItemClick(navBarItem.CART)}
         >
           Cart ( {cartItemsNumber} )
         </NavBarItem>
-        <NavBarItem
-          onClick={() => this.handleOnNavBarItemClick(navBarItem.PROFILE)}
-        >
-          Profile
-        </NavBarItem>
+        <Link to="/profile">
+          <NavBarItem
+            onClick={() => this.handleOnNavBarItemClick(navBarItem.PROFILE)}
+          >
+            Profile
+          </NavBarItem>
+        </Link>
       </div>
     );
   }

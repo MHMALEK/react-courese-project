@@ -4,6 +4,7 @@ import Loading from "../loading";
 
 import styles from "./style.module.css";
 import "../../base/button/style.css";
+import { Link } from "react-router-dom";
 
 class ProductsList extends Component {
   constructor(props) {
@@ -42,17 +43,19 @@ class ProductsList extends Component {
       <div className={styles.listWrapper}>
         {productsList.map((product, index) => {
           return (
-            <div key={index} className={styles.productItem}>
-              <div className={styles.productName}>{product.name}</div>
-              <div className={styles.productPrice}>{product.price}</div>
-              <button
-                className="button-global"
-                onClick={() => this.addToCart(product)}
-              >
-                {" "}
-                add To Cart
-              </button>
-            </div>
+            <Link to={`/product/${product.id}`}>
+              <div key={index} className={styles.productItem}>
+                <div className={styles.productName}>{product.name}</div>
+                <div className={styles.productPrice}>{product.price}</div>
+                <button
+                  className="button-global"
+                  onClick={() => this.addToCart(product)}
+                >
+                  {" "}
+                  add To Cart
+                </button>
+              </div>
+            </Link>
           );
         })}
       </div>

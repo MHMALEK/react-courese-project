@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import MainPage from "./pages/main-page";
 import reportWebVitals from "./reportWebVitals";
+import RouterProvider from "./router";
 
 ReactDOM.render(
   <React.StrictMode>
-    <MainPage />
+    <RouterProvider />
   </React.StrictMode>,
   document.getElementById("root")
 );
