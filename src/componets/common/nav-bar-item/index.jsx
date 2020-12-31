@@ -1,18 +1,16 @@
-import React, { Component } from "react";
+import React from "react";
 import styles from "./style.module.css";
 
-class NavBarItem extends Component {
-  handleClick = () => {
-    const { onClick } = this.props;
+const NavBarItem = ({ children, onClick }) => {
+  const handleClick = () => {
     onClick && onClick();
   };
-  render() {
-    return (
-      <div onClick={this.handleClick} className={styles.navBarItem}>
-        {this.props.children}
-      </div>
-    );
-  }
-}
+
+  return (
+    <div onClick={handleClick} className={styles.navBarItem}>
+      {children}
+    </div>
+  );
+};
 
 export default NavBarItem;

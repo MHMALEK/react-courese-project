@@ -1,36 +1,29 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { getMockProducts } from "../../../server";
 import Loading from "../loading";
 
 import styles from "./style.module.css";
 import "../../base/button/style.css";
 
-class ProductsList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      productsList: [],
-      isLoading: true,
-    };
-    this.addToCart = this.addToCart.bind(this);
-  }
-  componentDidMount() {
-    this.getDataFromApi();
-  }
-  async getDataFromApi() {
-    const response = await getMockProducts();
-    // const hasOffProducts = response.filter((product) => product.hasOff);
-    this.setState({
-      productsList: response,
-      isLoading: false,
-    });
-  }
+const ProductsList = ({ onProductSelected }) => {
+  const [productsList, setProductsList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  addToCart(product) {
-    this.props.onProductSelected(product);
-  }
-  renderProducts = () => {
-    const { productsList, isLoading } = this.state;
+  useEffect(() => {
+    getDataFromApi();
+  }, []);
+
+  const getDataFromApi = async () => {
+    const response = await getMockProducts();
+    setProductsList(response);
+    setIsLoading(false);
+  };
+
+  const addToCart = (product) => {
+    onProductSelected(product);
+  };
+
+  const renderProducts = () => {
     if (isLoading) {
       return (
         <div className={styles.loadingWrapper}>
@@ -47,9 +40,8 @@ class ProductsList extends Component {
               <div className={styles.productPrice}>{product.price}</div>
               <button
                 className="button-global"
-                onClick={() => this.addToCart(product)}
+                onClick={() => addToCart(product)}
               >
-                {" "}
                 add To Cart
               </button>
             </div>
@@ -58,9 +50,8 @@ class ProductsList extends Component {
       </div>
     );
   };
-  render() {
-    return <>{this.renderProducts()}</>;
-  }
-}
+
+  return renderProducts()
+};
 
 export default ProductsList;

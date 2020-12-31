@@ -9,54 +9,46 @@ const navBarItem = {
   PROFILE: "profile",
 };
 
-class NavBar extends React.Component {
-  handleOnHomeClick = () => {
+const NavBar = (props) => {
+  const handleOnHomeClick = () => {
     // handle click on home
   };
 
-  handleOnCartClick = (itemName) => {
+  const handleOnCartClick = (itemName) => {
     // handle click on cart
-    const { onItemClick } = this.props;
+    const { onItemClick } = props;
     onItemClick(itemName);
   };
 
-  handleOnProfileClick = () => {
+  const handleOnProfileClick = () => {
     // handle click on profile
   };
 
-  handleOnNavBarItemClick = (itemName) => {
+  const handleOnNavBarItemClick = (itemName) => {
     if (itemName === navBarItem.HOME) {
-      this.handleOnHomeClick();
+      handleOnHomeClick();
     }
     if (itemName === navBarItem.CART) {
-      this.handleOnCartClick(itemName);
+      handleOnCartClick(itemName);
     }
     if (itemName === navBarItem.PROFILE) {
-      this.handleOnProfileClick();
+      handleOnProfileClick();
     }
   };
 
-  render() {
-    const { cartItemsNumber } = this.props;
-    return (
-      <div className="nav-bar">
-        <NavBarItem
-          onClick={() => this.handleOnNavBarItemClick(navBarItem.HOME)}
-        >
-          Home
-        </NavBarItem>
-        <NavBarItem
-          onClick={() => this.handleOnNavBarItemClick(navBarItem.CART)}
-        >
-          Cart ( {cartItemsNumber} )
-        </NavBarItem>
-        <NavBarItem
-          onClick={() => this.handleOnNavBarItemClick(navBarItem.PROFILE)}
-        >
-          Profile
-        </NavBarItem>
-      </div>
-    );
-  }
-}
+  const { cartItemsNumber } = props;
+  return (
+    <div className="nav-bar">
+      <NavBarItem onClick={() => handleOnNavBarItemClick(navBarItem.HOME)}>
+        Home
+      </NavBarItem>
+      <NavBarItem onClick={() => handleOnNavBarItemClick(navBarItem.CART)}>
+        Cart ( {cartItemsNumber} )
+      </NavBarItem>
+      <NavBarItem onClick={() => handleOnNavBarItemClick(navBarItem.PROFILE)}>
+        Profile
+      </NavBarItem>
+    </div>
+  );
+};
 export default NavBar;

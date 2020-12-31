@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../../componets/layout/header";
 import NavBar from "../../componets/common/nav-bar";
-import Footer from "../../componets/layout/footer";
 import ProductsList from "../../componets/common/products-list";
 import Cart from "../../componets/common/cart";
 
@@ -13,95 +12,68 @@ const navBarItem = {
   PROFILE: "profile",
 };
 
-class MainPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleOnProductSelected = this.handleOnProductSelected.bind(this);
+const MainPage = () => {
+  const [showCart, setShowCart] = useState(false);
+  const [addedToCartList, setAddedToCartList] = useState([]);
 
-    this.state = {
-      addedToCartList: [],
-      showCart: false,
-    };
-  }
-  handleOnProductSelected(productItem) {
-    this.setState(
-      (prevState) => {
-        if (!prevState.addedToCartList.includes(productItem)) {
-          return {
-            addedToCartList: [...prevState.addedToCartList, productItem],
-          };
-        }
-        return {
-          ...prevState,
-        };
-      },
-      () => {
-        console.log(this.state);
+  const handleOnProductSelected = (productItem) => {
+    setAddedToCartList((addedToCartListPrevState) => {
+      if (!addedToCartListPrevState.includes(productItem)) {
+        return [...addedToCartListPrevState, productItem];
       }
-    );
-  }
-  handleRemoveProductFromCart = (productItem) => {
-    const newList = this.state.addedToCartList.filter((product) => {
-      return product.id !== productItem.id;
-    });
-    this.setState({
-      addedToCartList: newList,
+      return [...addedToCartListPrevState];
     });
   };
+  const handleRemoveProductFromCart = (productItem) => {
+    const newList = addedToCartList.filter((product) => {
+      return product.id !== productItem.id;
+    });
+    setAddedToCartList(newList);
+  };
 
-  handleOnHomeClick = () => {
+  const handleOnHomeClick = () => {
     // handle click on home
   };
 
-  handleOnCartClick = () => {
+  const handleOnCartClick = () => {
     // handle click on cart
-    this.setState(
-      (prevState) => {
-        return {
-          showCart: !prevState.showCart,
-        };
-      },
-      () => console.log(this.state.showCart)
-    );
+    setShowCart((prevState) => !prevState);
   };
 
-  handleOnProfileClick = () => {
+  const handleOnProfileClick = () => {
     // handle click on profile
   };
 
-  handleOnNavItemClick = (itemName) => {
+  const handleOnNavItemClick = (itemName) => {
     if (itemName === navBarItem.HOME) {
-      this.handleOnHomeClick();
+      handleOnHomeClick();
     }
     if (itemName === navBarItem.CART) {
-      this.handleOnCartClick();
+      handleOnCartClick();
     }
     if (itemName === navBarItem.PROFILE) {
-      this.handleOnProfileClick();
+      handleOnProfileClick();
     }
   };
 
-  render() {
-    const { showCart, addedToCartList } = this.state;
-    return (
-      <div className="main-layout">
-        <Header>
-          <NavBar
-            onItemClick={(itemName) => this.handleOnNavItemClick(itemName)}
-            cartItemsNumber={addedToCartList.length}
-          />
-        </Header>
-        <Cart
-          list={addedToCartList}
-          onItemRemove={this.handleRemoveProductFromCart}
-          show={showCart}
+  return (
+    <div className="main-layout">
+      <Header>
+        <NavBar
+          onItemClick={(itemName) => handleOnNavItemClick(itemName)}
+          cartItemsNumber={addedToCartList.length}
         />
-        <div className={styles.container}>
-          <ProductsList onProductSelected={this.handleOnProductSelected} />
-        </div>
+      </Header>
+      <Cart
+        list={addedToCartList}
+        onItemRemove={handleRemoveProductFromCart}
+        show={showCart}
+      />
+      <div className={styles.container}>
+        <ProductsList onProductSelected={handleOnProductSelected} />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default MainPage;
